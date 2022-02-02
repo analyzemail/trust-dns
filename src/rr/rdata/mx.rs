@@ -16,6 +16,8 @@
 
 //! mail exchange, email, record
 
+use std::fmt;
+
 use ::serialize::txt::*;
 use ::serialize::binary::*;
 use ::error::*;
@@ -132,6 +134,12 @@ pub fn parse(tokens: &Vec<Token>, origin: Option<&Name>) -> ParseResult<MX> {
         }));
 
     Ok(MX::new(preference, exchange))
+}
+
+impl fmt::Display for MX {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+        write!(f, "{pref} {ex}", pref = self.preference, ex = self.exchange)
+    }
 }
 
 #[test]
